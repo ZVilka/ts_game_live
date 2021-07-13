@@ -340,3 +340,10 @@ textarea {
   background: #b3d4fc;
   text-shadow: none;
 }
+
+.gameField {
+  width: 500px;
+  height: 300px;
+  border: 2px solid black;
+  margin: 20px;
+}
