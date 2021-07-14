@@ -1,9 +1,7 @@
-var Cell = /** @class */ (function () {
-    function Cell(x, y) {
+export default class Cell {
+    // x: number;
+    // y: number;
+    constructor() {
         this.state = false;
-        this.x = x;
-        this.y = y;
     }
-    return Cell;
-}());
-export default Cell;
+}

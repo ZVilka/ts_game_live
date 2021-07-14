@@ -342,8 +342,11 @@ textarea {
 }
 
 .gameField {
-  width: 500px;
-  height: 300px;
   border: 2px solid black;
   margin: 20px;
+}
+
+.content {
+  width: 100vw;
+  /*margin: 100px auto;*/
 }

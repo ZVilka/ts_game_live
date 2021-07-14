@@ -1,72 +1,99 @@
 import Field from './field.js';
-import { randomInteger as rnd, shuffle } from "./helpers.js";
-var App = /** @class */ (function () {
-    function App() {
-        this._field = new Field('gray');
-        this._cells = [];
+export default class App {
+    constructor() {
+        this._field = new Field('blue');
         this._startBtn = document.getElementById('start');
         this._pauseBtn = document.getElementById('pause');
         this._restartBtn = document.getElementById('restart');
-        for (var y = 0; y < Field.height / Field.cellSize; y++) {
-            this._cells[y] = [];
-            for (var x = 0; x < Field.width / Field.cellSize; x++) {
-                this._cells[y][x] = false;
-            }
-        }
-        this._countOfAllCells = this._cells.length * this._cells[0].length;
+        this._endGameBtn = document.getElementById('endgame');
         this._isStarted = false;
+        this._isPause = false;
     }
-    App.prototype._buttons = function () {
-        this._startBtn.addEventListener('click', this._createFirstCells.bind(this));
-    };
-    App.prototype._drawCell = function (x, y) {
-        this._field.ctx.fillRect(x * 10, y * 10, 10, 10);
-    };
-    App.prototype._drawCells = function () {
-        for (var y = 0; y < this._cells.length; y++) {
-            for (var x = 0; x < this._cells[y].length; x++) {
-                if (this._cells[y][x]) {
-                    console.log();
-                    this._drawCell(x, y);
-                }
+    _getCycles() {
+        let app = this;
+        this._cycles = setTimeout(function cycle() {
+            if (!app._isStarted) {
+                return;
             }
-        }
-    };
-    App.prototype._createFirstCells = function () {
+            if (app._field.isEndCycles) {
+                alert(`Игра окончена. Количество прошедших циклов: ${app._field.countOfCycles}`);
+                clearTimeout(app._cycles);
+                app._isStarted = false;
+                app._field.clearFieldAndCells();
+                app._field.clearCycleCounter();
+                app._field.isEndCycles = false;
+                return;
+            }
+            app._field.oneCycleLive();
+            app._cycles = setTimeout(cycle, 500);
+        }, 500);
+    }
+    _start() {
         if (this._isStarted) {
             alert('Вы уже начали игру!');
             return;
         }
-        // 20% живых клеток
-        var percentOfAliveCells = this._countOfAllCells * 0.2;
-        var countOfAliveCells = 0;
-        for (var y = 0; y < this._cells.length; y++) {
-            // Как лучше решить без флага?
-            var isEnoughCells = false;
-            for (var x = 0; x < this._cells[y].length; x++) {
-                if (countOfAliveCells >= percentOfAliveCells) {
-                    isEnoughCells = true;
-                    break;
-                }
-                if (rnd(0, 4) === 1) {
-                    this._cells[y][x] = true;
-                    countOfAliveCells++;
-                }
-                else {
-                    this._cells[y][x] = false;
-                }
-            }
-            if (isEnoughCells) {
-                break;
-            }
-        }
-        shuffle(this._cells);
+        this._field.createFirstAliveCells();
         this._isStarted = true;
-        this._drawCells();
-    };
-    App.prototype.run = function () {
+        this._getCycles();
+    }
+    _restart() {
+        if (!this._isStarted) {
+            alert('Вы ещё не начали игру! Нажмите "Старт"');
+            return;
+        }
+        if (this._isPause) {
+            this._isPause = false;
+            this._pauseBtn.innerHTML = 'Пауза';
+        }
+        this._isStarted = false;
+        clearTimeout(this._cycles);
+        this._field.clearCycleCounter();
+        this._field.clearFieldAndCells();
+        this._field.createFirstAliveCells();
+        this._getCycles();
+        this._isStarted = true;
+    }
+    _pause() {
+        if (!this._isStarted) {
+            alert('Игра ещё не началась! Нажмите кнопку "Старт"');
+            return;
+        }
+        this._isPause = !this._isPause;
+        if (this._isPause) {
+            clearTimeout(this._cycles);
+            this._pauseBtn.innerHTML = 'Продолжить';
+        }
+        else {
+            this._pauseBtn.innerHTML = 'Пауза';
+            this._getCycles();
+        }
+    }
+    _endGame() {
+        if (!this._isStarted) {
+            alert('Игра ещё не началась! Нажмите кнопку "Старт"');
+            return;
+        }
+        if (this._isPause) {
+            this._isPause = false;
+            this._pauseBtn.innerHTML = 'Пауза';
+        }
+        alert(`Вы закончили игру. Количество прошедших циклов: ${this._field.countOfCycles}`);
+        this._isStarted = false;
+        this._field.clearFieldAndCells();
+        this._field.clearCycleCounter();
+    }
+    _buttons() {
+        this._startBtn.addEventListener('click', this._start.bind(this));
+        this._restartBtn.addEventListener('click', this._restart.bind(this));
+        this._pauseBtn.addEventListener('click', this._pause.bind(this));
+        this._endGameBtn.addEventListener('click', this._endGame.bind(this));
+        this._field.canvasField.addEventListener('click', this._field.drawOneCell.bind(this._field));
+        this._field.canvasField.addEventListener('mousedown', this._field.userStartDrawing.bind(this._field));
+        this._field.canvasField.addEventListener('mousemove', this._field.userKeepDrawing.bind(this._field));
+        this._field.canvasField.addEventListener('mouseup', this._field.userStopDrawing.bind(this._field));
+    }
+    run() {
         this._buttons();
-    };
-    return App;
-}());
-export default App;
+    }
+}
