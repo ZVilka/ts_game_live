@@ -16,23 +16,22 @@ export default class App {
         this._isPaused = false;
     }
     _getCycles() {
-        let app = this;
         this._cycles = setTimeout(function cycle() {
-            if (!app._isStarted) {
+            if (!this._isStarted) {
                 return;
             }
-            if (app._field.isEndCycles) {
-                alert(`Игра окончена. Количество прошедших циклов: ${app._field.countOfCycles}`);
-                clearTimeout(app._cycles);
-                app._isStarted = false;
-                app._field.clearFieldAndCells();
-                app._field.clearCycleCounter();
-                app._field.isEndCycles = false;
+            if (this._field.isEndCycles) {
+                alert(`Игра окончена. Количество прошедших циклов: ${this._field.countOfCycles}`);
+                clearTimeout(this._cycles);
+                this._isStarted = false;
+                this._field.clearFieldAndCells();
+                this._field.clearCycleCounter();
+                this._field.isEndCycles = false;
                 return;
             }
-            app._field.oneCycleLive();
-            app._cycles = setTimeout(cycle, app._speedCycle);
-        }, app._speedCycle);
+            this._field.oneCycleLive();
+            this._cycles = setTimeout(cycle.bind(this), this._speedCycle);
+        }.bind(this), this._speedCycle);
     }
     _setDefaultSpeed() {
         this._speedCycle = 500;
@@ -99,7 +98,6 @@ export default class App {
         if (this._speedCycle >= 2000 || !this._isStarted || this._isPaused) {
             return;
         }
-        console.log(this._speedCycle);
         this._speedCycle += 100;
         document.getElementById('speed').innerHTML = (this._speedCycle / 1000).toString();
     }
@@ -107,7 +105,6 @@ export default class App {
         if (this._speedCycle <= 100 || !this._isStarted || this._isPaused) {
             return;
         }
-        console.log(this._speedCycle);
         this._speedCycle -= 100;
         document.getElementById('speed').innerHTML = (this._speedCycle / 1000).toString();
     }

@@ -11,7 +11,7 @@ export default class Field {
         this._width = width;
         this._height = height;
         this._cellSize = cellSize;
-        this._percentOfAliveCells = (this._width * this._height / Math.pow(this._cellSize, 2))
+        this._partOfAliveCells = (this._width * this._height / Math.pow(this._cellSize, 2))
             * (percentOfAliveCells / 100);
         this._createCells();
         this._countOfAllCells = this._cells.length * this._cells[0].length;
@@ -49,12 +49,12 @@ export default class Field {
         document.getElementById('count').innerHTML = this.countOfCycles.toString();
     }
     createFirstAliveCells() {
-        this._percentOfAliveCells = this._countOfAllCells * 0.2;
-        if (this._countOfAliveCells < this._percentOfAliveCells) {
+        this._partOfAliveCells = this._countOfAllCells * 0.2;
+        if (this._countOfAliveCells < this._partOfAliveCells) {
             for (let y = 0; y < this._cells.length; y++) {
                 let isEnoughCells = false;
                 for (let x = 0; x < this._cells[y].length; x++) {
-                    if (this._countOfAliveCells >= this._percentOfAliveCells) {
+                    if (this._countOfAliveCells >= this._partOfAliveCells) {
                         isEnoughCells = true;
                         break;
                     }
