@@ -364,10 +364,11 @@ body {
 .counter {
   display: flex;
   width: 100vw;
-  height: 80px;
+  height: 40px;
   padding: 20px;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
+  align-content: space-evenly;
 }
 
 .counter {
@@ -376,7 +377,7 @@ body {
 
 .btns {
   display: flex;
-  width: 50vw;
+  width: 70vw;
   justify-content: space-evenly;
   align-content: space-evenly;
   align-items: center;
@@ -387,7 +388,7 @@ body {
 
 .btn {
   height: 50px;
-  width: 180px;
+  width: 130px;
   background: linear-gradient(99.09deg, #DAEDFC 0%, #E9F2F9 100%);
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-sizing: border-box;

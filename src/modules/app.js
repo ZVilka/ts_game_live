@@ -1,13 +1,19 @@
+// Добавлена проверка завершения игры при условии, что состояние клеток больше не меняется
+// Добавлена возможность рисовать живые клетки
+// Добавлено ускорение/замедление времени жизненного цикла
 import Field from './field.js';
 export default class App {
     constructor() {
         this._field = new Field(1000, 500);
         this._startBtn = document.getElementById('start');
+        this._speedUpBtn = document.getElementById('speedup');
+        this._slowDownBtn = document.getElementById('slowdown');
         this._pauseBtn = document.getElementById('pause');
         this._restartBtn = document.getElementById('restart');
         this._endGameBtn = document.getElementById('endgame');
+        this._speedCycle = 500;
         this._isStarted = false;
-        this._isPause = false;
+        this._isPaused = false;
     }
     _getCycles() {
         let app = this;
@@ -25,14 +31,19 @@ export default class App {
                 return;
             }
             app._field.oneCycleLive();
-            app._cycles = setTimeout(cycle, 500);
-        }, 500);
+            app._cycles = setTimeout(cycle, app._speedCycle);
+        }, app._speedCycle);
+    }
+    _setDefaultSpeed() {
+        this._speedCycle = 500;
+        document.getElementById('speed').innerHTML = (this._speedCycle / 1000).toString();
     }
     _start() {
         if (this._isStarted) {
             alert('Вы уже начали игру!');
             return;
         }
+        this._setDefaultSpeed();
         this._field.createFirstAliveCells();
         this._isStarted = true;
         this._getCycles();
@@ -42,14 +53,15 @@ export default class App {
             alert('Вы ещё не начали игру! Нажмите "Старт"');
             return;
         }
-        if (this._isPause) {
-            this._isPause = false;
+        if (this._isPaused) {
+            this._isPaused = false;
             this._pauseBtn.innerHTML = 'Пауза';
         }
         this._isStarted = false;
         clearTimeout(this._cycles);
         this._field.clearCycleCounter();
         this._field.clearFieldAndCells();
+        this._setDefaultSpeed();
         this._field.createFirstAliveCells();
         this._getCycles();
         this._isStarted = true;
@@ -59,8 +71,8 @@ export default class App {
             alert('Игра ещё не началась! Нажмите кнопку "Старт"');
             return;
         }
-        this._isPause = !this._isPause;
-        if (this._isPause) {
+        this._isPaused = !this._isPaused;
+        if (this._isPaused) {
             clearTimeout(this._cycles);
             this._pauseBtn.innerHTML = 'Продолжить';
         }
@@ -74,8 +86,8 @@ export default class App {
             alert('Игра ещё не началась! Нажмите кнопку "Старт"');
             return;
         }
-        if (this._isPause) {
-            this._isPause = false;
+        if (this._isPaused) {
+            this._isPaused = false;
             this._pauseBtn.innerHTML = 'Пауза';
         }
         alert(`Вы закончили игру. Количество прошедших циклов: ${this._field.countOfCycles}`);
@@ -83,8 +95,26 @@ export default class App {
         this._field.clearFieldAndCells();
         this._field.clearCycleCounter();
     }
+    _slowDown() {
+        if (this._speedCycle >= 2000 || !this._isStarted || this._isPaused) {
+            return;
+        }
+        console.log(this._speedCycle);
+        this._speedCycle += 100;
+        document.getElementById('speed').innerHTML = (this._speedCycle / 1000).toString();
+    }
+    _speedUp() {
+        if (this._speedCycle <= 100 || !this._isStarted || this._isPaused) {
+            return;
+        }
+        console.log(this._speedCycle);
+        this._speedCycle -= 100;
+        document.getElementById('speed').innerHTML = (this._speedCycle / 1000).toString();
+    }
     _buttons() {
         this._startBtn.addEventListener('click', this._start.bind(this));
+        this._slowDownBtn.addEventListener('click', this._slowDown.bind(this));
+        this._speedUpBtn.addEventListener('click', this._speedUp.bind(this));
         this._restartBtn.addEventListener('click', this._restart.bind(this));
         this._pauseBtn.addEventListener('click', this._pause.bind(this));
         this._endGameBtn.addEventListener('click', this._endGame.bind(this));

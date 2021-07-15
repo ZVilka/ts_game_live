@@ -1,5 +1,3 @@
-// Добавлена проверка завершения игры при условии, что состояние клеток больше не меняется
-// Добавлена возможность рисовать живые клетки
 import Cell from './cell.js';
 import { randomInteger as rnd, shuffle, isEqualArray } from "./helpers.js";
 export default class Field {
@@ -27,7 +25,6 @@ export default class Field {
         this._mouseCoordinate = { x: 0, y: 0 };
     }
     _createCells() {
-        // убрать функции, заменить на методы массивов
         for (let y = 0; y < this._height / this._cellSize; y++) {
             this._cells[y] = [];
             this._tempCells[y] = [];
@@ -55,7 +52,6 @@ export default class Field {
         this._percentOfAliveCells = this._countOfAllCells * 0.2;
         if (this._countOfAliveCells < this._percentOfAliveCells) {
             for (let y = 0; y < this._cells.length; y++) {
-                // Как лучше решить без флага?
                 let isEnoughCells = false;
                 for (let x = 0; x < this._cells[y].length; x++) {
                     if (this._countOfAliveCells >= this._percentOfAliveCells) {
@@ -124,9 +120,6 @@ export default class Field {
         }
     }
     drawOneCell(event) {
-        // if (this._countOfAliveCells >= this._percentOfAliveCells && !isStarted) {
-        //     return;
-        // }
         const x = Math.floor(event.offsetX / 10);
         const y = Math.floor(event.offsetY / 10);
         if (x >= 0 && y >= 0 && y < this._cells.length && x < this._cells[y].length) {
@@ -139,9 +132,6 @@ export default class Field {
         this._isDrawing = true;
     }
     userKeepDrawing(event) {
-        // if (this._countOfAliveCells >= this._percentOfAliveCells && !isStarted) {
-        //     return;
-        // }
         if (this._isDrawing) {
             this.drawOneCell(event);
         }
