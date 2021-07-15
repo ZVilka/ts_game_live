@@ -341,12 +341,99 @@ textarea {
   text-shadow: none;
 }
 
+body {
+  background-color: rgba(218, 237, 252, 1);
+}
+
 .gameField {
-  border: 2px solid black;
+  border: 2px solid rgba(39, 38, 80, 1);;
   margin: 20px;
+  display: block;
 }
 
 .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100vw;
-  /*margin: 100px auto;*/
+  color: rgba(39, 38, 80, 1);
+  font-family: Comic Sans MS;
+}
+
+.counter {
+  display: flex;
+  width: 100vw;
+  height: 80px;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.counter {
+  font-size: 32px;
+}
+
+.btns {
+  display: flex;
+  width: 50vw;
+  justify-content: space-evenly;
+  align-content: space-evenly;
+  align-items: center;
+  font-size: 18px;
+  height: 60px;
+  padding: 10px;
+}
+
+.btn {
+  height: 50px;
+  width: 180px;
+  background: linear-gradient(99.09deg, #DAEDFC 0%, #E9F2F9 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-sizing: border-box;
+  box-shadow: -1px -4px 5px #FFFFFF, 4px 4px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+  color: rgba(39, 38, 80, 1);
+  font-family: Comic Sans MS;
+}
+
+.btn:hover {
+  box-shadow: 3px -4px 10px rgba(255, 255, 255, 0.5), inset 4px 4px 5px rgba(0, 0, 0, 0.25);
+}
+
+.red-btn {
+  box-shadow: -1px -4px 5px #FFFFFF, 4px 4px 5px rgba(255, 52, 101, 0.5);
+}
+
+.btn:hover {
+  box-shadow: 3px -4px 10px rgba(255, 255, 255, 0.5), inset 4px 4px 5px rgba(0, 0, 0, 0.25);
+}
+
+.btn:active {
+  box-shadow: -1px -4px 5px #FFFFFF, 4px 4px 5px rgba(0, 0, 0, 0.25);
+}
+
+.red-btn:hover {
+  background: linear-gradient(121.39deg, #FF3465 39.33%, #FF2E2E 95%);
+}
+
+.red-btn:active {
+  background: linear-gradient(121.39deg, #FF3465 39.33%, #FF2E2E 95%);
+}
+
+.green-btn {
+  box-shadow: -1px -4px 5px #FFFFFF, 4px 4px 5px rgba(9, 244, 234, 0.5);
+}
+
+.green-btn:hover {
+  background: linear-gradient(94.34deg, #09F4EA 0%, #1ac5e1 96.48%);
+}
+
+.green-btn:active {
+  background: linear-gradient(94.34deg, #09F4EA 0%, #1ac5e1 96.48%);
+}
+
+.field {
+  margin: 10px;
+  padding: 20px;
 }

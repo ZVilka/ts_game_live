@@ -20,8 +20,8 @@ export default class Field {
     isEndCycles = false;
     canvasField: HTMLCanvasElement;
 
-    constructor(colorOfCell: string, width: number = 500, height: number = 300,
-                cellSize: number = 10, percentOfAliveCells: number = 20) {
+    constructor(width: number = 500, height: number = 300,
+                cellSize: number = 10, percentOfAliveCells: number = 20, colorOfCell: string = '#1AC5E1') {
         this._width = width;
         this._height = height;
         this._cellSize = cellSize;

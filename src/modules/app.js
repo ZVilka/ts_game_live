@@ -1,7 +1,7 @@
 import Field from './field.js';
 export default class App {
     constructor() {
-        this._field = new Field('blue');
+        this._field = new Field(1000, 500);
         this._startBtn = document.getElementById('start');
         this._pauseBtn = document.getElementById('pause');
         this._restartBtn = document.getElementById('restart');

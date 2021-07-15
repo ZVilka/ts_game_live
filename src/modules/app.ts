@@ -1,7 +1,7 @@
 import Field from './field.js';
 
 export default class App {
-    protected _field = new Field('blue');
+    protected _field = new Field(1000, 500);
 
     protected _startBtn = document.getElementById('start');
     protected _pauseBtn = document.getElementById('pause');

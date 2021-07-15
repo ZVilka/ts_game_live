@@ -7,12 +7,18 @@
 </head>
 <body>
   <div class="content">
-    <p>Циклов прошло: <span id="count">0</span></p>
-    <button id="start">Старт</button>
-    <button id="pause">Пауза</button>
-    <button id="restart">Сначала</button>
-    <button id="endgame">Закончить игру</button>
-    <canvas class='gameField' id="field"></canvas>
+    <div class="counter">
+      <p>Циклов прошло: <span id="count">0</span></p>
+    </div>
+    <div class="btns">
+      <button class="btn green-btn" id="start">Старт</button>
+      <button class="btn" id="pause">Пауза</button>
+      <button class="btn" id="restart">Сначала</button>
+      <button class="btn red-btn" id="endgame">Закончить игру</button>
+    </div>
+    <div class="field">
+      <canvas class='gameField' id="field"></canvas>
+    </div>
   </div>
 
   <script type="module" src="index.js"></script>

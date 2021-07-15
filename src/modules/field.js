@@ -3,7 +3,7 @@
 import Cell from './cell.js';
 import { randomInteger as rnd, shuffle, isEqualArray } from "./helpers.js";
 export default class Field {
-    constructor(colorOfCell, width = 500, height = 300, cellSize = 10, percentOfAliveCells = 20) {
+    constructor(width = 500, height = 300, cellSize = 10, percentOfAliveCells = 20, colorOfCell = '#1AC5E1') {
         this._cells = [];
         this._tempCells = [];
         this._isDrawing = false;
